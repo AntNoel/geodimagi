@@ -13,13 +13,11 @@ class HomePageView(ListView):
     template_name = "home.html"
     model = Project
     context_object_name = "projects"
-    # queryset = Project.objects.annotate(
-    #     distance=Distance("location", user_location)
-    # ).order_by("distance")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["dimagi_cambridge_office_coords"] = dumps(
             dimagi_cambridge_office_coords
         )
+
         return context

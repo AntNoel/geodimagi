@@ -16,11 +16,6 @@
     <title>GeoDimagi</title>
   </head>
   <body>
-    {% comment %} {% comment %} {% if projects %} {% for project in projects %}
-    <p>{{ project.name }}: {{ project.location.get }}</p>
-    {% endfor %} {% else %} There are no projects... {% endif %} {% endcomment
-    %} {% endcomment %}
-
     <div id="map"></div>
 
     <!--Leaflet's Javascript -->
@@ -39,9 +34,12 @@
       const DIMAGI_CAMBRIDGE_OFFICE_COORDS = JSON.parse(
         '{{ dimagi_cambridge_office_coords |escapejs }}'
       );
+
       const DEFAULT_ZOOM = 13;
 
+
       const loadPage = () => {
+        //Load the map
         const map = L.map('map').setView(
           [
             DIMAGI_CAMBRIDGE_OFFICE_COORDS.lat,
@@ -49,12 +47,22 @@
           ],
           DEFAULT_ZOOM
         );
-        //const map = L.map('map').setView({{ dimagi_cambridge_office_coords.lat }}, {{ dimagi_cambridge_office_coords.long }}], 13);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution:
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map);
+
+        //Load the default markers
+
+
+        {% for project in projects %}
+         {% for location in project.location.all  %}
+          L.marker([{{ location.location.x }}, {{ location.location.y }}]).addTo(map).bindPopup('{{ project.name }}')
+
+          {% endfor %}
+        {% endfor %}
+
       };
 
       loadPage();
