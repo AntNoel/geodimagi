@@ -24,8 +24,22 @@ class Client(models.Model):
 
 
 class Project(models.Model):
+    SAAS = "SaaS"
+    SOLUTIONS = "Solutions"
+    INDIA = "India"
+    USH = "US Health"
+    GSO = "GSO"
+    DIVISIONS_CHOICES = [
+        (SAAS, "SaaS"),
+        (SOLUTIONS, "Solutions"),
+        (INDIA, "India"),
+        (USH, "US Health"),
+        (GSO, "GSO"),
+    ]
     name = models.CharField(max_length=100)
-    team_divison = models.CharField(max_length=100, blank=True)
+    team_divison = models.CharField(
+        choices=DIVISIONS_CHOICES, blank=True, max_length=50
+    )
     location = models.ManyToManyField(Location)
     client = models.ManyToManyField(Client, blank=True)
 
