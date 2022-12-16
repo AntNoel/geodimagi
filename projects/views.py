@@ -19,5 +19,7 @@ class HomePageView(ListView):
         context["dimagi_cambridge_office_coords"] = dumps(
             dimagi_cambridge_office_coords
         )
+        print(self.queryset)
+        # context["projects_dict"] = list(self.queryset)
 
         return context

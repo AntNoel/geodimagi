@@ -145,18 +145,23 @@
       const DIMAGI_CAMBRIDGE_OFFICE_COORDS = JSON.parse(
         '{{ dimagi_cambridge_office_coords |escapejs }}'
       );
-
+      {% comment %} let projects = {{ project }} {% endcomment %}
+      {% comment %} console.log({) {% endcomment %}
       const DEFAULT_ZOOM = 13;
 
-      const loadPage = () => {
-        //Load the map
-        const map = L.map('map').setView(
+      const map = L.map('map').setView(
           [
             DIMAGI_CAMBRIDGE_OFFICE_COORDS.lat,
             DIMAGI_CAMBRIDGE_OFFICE_COORDS.long,
           ],
           DEFAULT_ZOOM
         );
+      let project_array = []
+
+
+      const loadPage = async() => {
+        //Load the map
+
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution:
@@ -164,16 +169,21 @@
         }).addTo(map);
 
         //Load the default markers
-
-
-        {% for project in projects %}
+        //This is done asyncally, which might be a problem if the user uses the filters too quick
+        {% comment %} {% for project in projects %}
          {% for location in project.location.all  %}
-          L.marker([{{ location.location.x }}, {{ location.location.y }}]).addTo(map).bindPopup('{{ project.name }}')
+         console.log({{ location.location.x }},{{ location.location.y }})
+          await project_array.push(L.marker([{{ location.location.x }}, {{ location.location.y }}]).addTo(map).bindPopup('{{ project.name }}'))
 
           {% endfor %}
-        {% endfor %}
+        {% endfor %} {% endcomment %}
+
 
       };
+
+      const groupie = L.featureGroup(project_array).addTo(map);
+
+
 
       const handleDivisionChange = (e) => {
         const checked_inputs = document.querySelectorAll('input[name=divisioncheckboxes]:checked')
