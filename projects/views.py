@@ -3,6 +3,7 @@ from django.views.generic.list import ListView
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
 from json import dumps
+
 from .models import Project
 
 # Create your views here.
@@ -19,7 +20,5 @@ class HomePageView(ListView):
         context["dimagi_cambridge_office_coords"] = dumps(
             dimagi_cambridge_office_coords
         )
-        print(self.queryset)
-        # context["projects_dict"] = list(self.queryset)
 
         return context

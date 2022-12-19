@@ -23,6 +23,7 @@
     <title>GeoDimagi</title>
   </head>
   <body>
+    {% load project_extras %}
     <div id="map"></div>
     <a
       class="hamburger-btn"
@@ -145,7 +146,8 @@
       const DIMAGI_CAMBRIDGE_OFFICE_COORDS = JSON.parse(
         '{{ dimagi_cambridge_office_coords |escapejs }}'
       );
-      {% comment %} let projects = {{ project }} {% endcomment %}
+      {% comment %} let projects = JSON.parse('{{ projects | safe }}')
+      console.log(projects) {% endcomment %}
       {% comment %} console.log({) {% endcomment %}
       const DEFAULT_ZOOM = 13;
 
@@ -156,7 +158,7 @@
           ],
           DEFAULT_ZOOM
         );
-      let project_array = []
+        const markers = L.featureGroup()
 
 
       const loadPage = async() => {
@@ -170,27 +172,55 @@
 
         //Load the default markers
         //This is done asyncally, which might be a problem if the user uses the filters too quick
-        {% comment %} {% for project in projects %}
+
+
+        /*for (let i = 0; i < projects.length; i++) {
+          console.log(projects[i])
+          for (let j = 0; j < projects[i].fields.location; j++) {
+            console.log(projects[i].fields.location[j])
+          }
+
+        }*/
+
+        /*
+         {% for project in projects %}
          {% for location in project.location.all  %}
          console.log({{ location.location.x }},{{ location.location.y }})
-          await project_array.push(L.marker([{{ location.location.x }}, {{ location.location.y }}]).addTo(map).bindPopup('{{ project.name }}'))
+
+          L.marker([{{ location.location.x }}, {{ location.location.y }}]).addTo(map).bindPopup('{{ project.name }}')
 
           {% endfor %}
-        {% endfor %} {% endcomment %}
+        {% endfor %}*/
 
+
+
+        {% for project in projects %}
+         {% for location in project.location.all  %}
+         markers.addLayer(L.marker([{{ location.location.x }}, {{ location.location.y }}]).bindPopup('{{ project.name }}'))
+
+          {% endfor %}
+
+          {% if forloop.last %}
+            markers.addTo(map)
+          {% endif %}
+
+        {% endfor %}
 
       };
 
-      const groupie = L.featureGroup(project_array).addTo(map);
 
 
 
       const handleDivisionChange = (e) => {
         const checked_inputs = document.querySelectorAll('input[name=divisioncheckboxes]:checked')
 
-        console.log(checked_inputs)
-        var res = Array.from(checked_inputs).map(c => c.value).join(', ');
+        var res = Array.from(checked_inputs).map(c => c.value);
         console.log(res);
+        markers.remove()
+
+        {% for project in projects|division_filter:res %}
+          {{ project }}
+        {% endfor %}
 
       }
       const division_form = document.querySelector('.division-form')
