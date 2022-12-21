@@ -37,7 +37,7 @@ class Project(models.Model):
         (GSO, "GSO"),
     ]
     name = models.CharField(max_length=100)
-    team_divison = models.CharField(
+    team_division = models.CharField(
         choices=DIVISIONS_CHOICES, blank=True, max_length=50
     )
     location = models.ManyToManyField(Location)

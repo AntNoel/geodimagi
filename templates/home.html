@@ -211,16 +211,31 @@
 
 
 
-      const handleDivisionChange = (e) => {
+      const handleDivisionChange = async(e) => {
         const checked_inputs = document.querySelectorAll('input[name=divisioncheckboxes]:checked')
-
-        var res = Array.from(checked_inputs).map(c => c.value);
-        console.log(res);
+        let res = []
+        res = Array.from(checked_inputs).map(c => c.value);
         markers.remove()
+        markers.clearLayers()
 
-        {% for project in projects|division_filter:res %}
-          {{ project }}
-        {% endfor %}
+
+          {% for project in projects %}
+            {% for location in project.location.all  %}
+            if (res.includes('{{ project.team_division }}'))  {
+              markers.addLayer(L.marker([{{ location.location.x }}, {{ location.location.y }}]).bindPopup('{{ project.name }}'))
+            }
+            {% endfor %}
+            {% if forloop.last %}
+            markers.addTo(map)
+          {% endif %}
+
+          {% endfor %}
+
+
+
+        {% comment %} {% for project in projects|division_filter:res %}
+          '{{ project }}'
+        {% endfor %} {% endcomment %}
 
       }
       const division_form = document.querySelector('.division-form')
