@@ -143,108 +143,107 @@
     </script>
     {% endcomment %}
     <script>
-      const DIMAGI_CAMBRIDGE_OFFICE_COORDS = JSON.parse(
-        '{{ dimagi_cambridge_office_coords |escapejs }}'
-      );
-      {% comment %} let projects = JSON.parse('{{ projects | safe }}')
-      console.log(projects) {% endcomment %}
-      {% comment %} console.log({) {% endcomment %}
-      const DEFAULT_ZOOM = 13;
+          const DIMAGI_CAMBRIDGE_OFFICE_COORDS = JSON.parse(
+            '{{ dimagi_cambridge_office_coords |escapejs }}'
+          );
+          {% comment %} let projects = JSON.parse('{{ projects | safe }}')
+          console.log(projects) {% endcomment %}
+          {% comment %} console.log({) {% endcomment %}
+          const DEFAULT_ZOOM = 13;
 
-      const map = L.map('map').setView(
-          [
-            DIMAGI_CAMBRIDGE_OFFICE_COORDS.lat,
-            DIMAGI_CAMBRIDGE_OFFICE_COORDS.long,
-          ],
-          DEFAULT_ZOOM
-        );
-        const markers = L.featureGroup()
-
-
-      const loadPage = async() => {
-        //Load the map
-
-
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(map);
-
-        //Load the default markers
-        //This is done asyncally, which might be a problem if the user uses the filters too quick
+        /*const houseIcon = L.icon({
+            iconUrl: "{% static 'icons/house.svg' %}",
+            iconSize:     [40 40], // size of the icon
+            shadowSize:   [0, 0], // size of the shadow
+            iconAnchor:   [20, 20], // point of the icon which will correspond to marker's location
+            shadowAnchor: [0, 0],  // the same for the shadow
+            popupAnchor:  [20, 20] // point from which the popup should open relative to the iconAnchor
+        });*/
+        const houseIcon = L.icon({
+          iconUrl: "{% static 'icons/house.svg' %}",
+          iconSize: [40, 40],
+          iconAnchor: [20, 20],
+          popupAnchor: [0, 0],
+      });
 
 
-        /*for (let i = 0; i < projects.length; i++) {
-          console.log(projects[i])
-          for (let j = 0; j < projects[i].fields.location; j++) {
-            console.log(projects[i].fields.location[j])
+
+          const map = L.map('map').setView(
+              [
+                DIMAGI_CAMBRIDGE_OFFICE_COORDS.lat,
+                DIMAGI_CAMBRIDGE_OFFICE_COORDS.long,
+              ],
+              DEFAULT_ZOOM
+            );
+            const markers = L.featureGroup()
+
+
+          const loadPage = async() => {
+            //Load the map
+
+
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(map);
+
+            //Load the default markers
+            //This is done asyncally, which might be a problem if the user uses the filters too quick
+
+            {% for project in projects %}
+             {% for location in project.location.all  %}
+                if ('{{ project.tag }}' == 'office') {
+                  markers.addLayer(L.marker([{{ location.location.x }}, {{ location.location.y }}], {icon: houseIcon}).bindPopup('{{ project.name }}'))
+
+                } else {
+                  markers.addLayer(L.marker([{{ location.location.x }}, {{ location.location.y }}]).bindPopup('{{ project.name }}'))
+
+                }
+
+              {% endfor %}
+
+              {% if forloop.last %}
+                markers.addTo(map)
+              {% endif %}
+
+            {% endfor %}
+
+          };
+
+
+
+
+          const handleDivisionChange = async(e) => {
+            const checked_inputs = document.querySelectorAll('input[name=divisioncheckboxes]:checked')
+            let res = []
+            res = Array.from(checked_inputs).map(c => c.value);
+            markers.remove()
+            markers.clearLayers()
+
+
+              {% for project in projects %}
+                {% for location in project.location.all  %}
+                if (res.includes('{{ project.team_division }}') || '{{ project.tag }}' == 'office')  {
+                  markers.addLayer(L.marker([{{ location.location.x }}, {{ location.location.y }}]).bindPopup('{{ project.name }}'))
+                }
+                {% endfor %}
+                {% if forloop.last %}
+                markers.addTo(map)
+              {% endif %}
+
+              {% endfor %}
+
+
           }
 
-        }*/
 
-        /*
-         {% for project in projects %}
-         {% for location in project.location.all  %}
-         console.log({{ location.location.x }},{{ location.location.y }})
-
-          L.marker([{{ location.location.x }}, {{ location.location.y }}]).addTo(map).bindPopup('{{ project.name }}')
-
-          {% endfor %}
-        {% endfor %}*/
-
-
-
-        {% for project in projects %}
-         {% for location in project.location.all  %}
-         markers.addLayer(L.marker([{{ location.location.x }}, {{ location.location.y }}]).bindPopup('{{ project.name }}'))
-
-          {% endfor %}
-
-          {% if forloop.last %}
-            markers.addTo(map)
-          {% endif %}
-
-        {% endfor %}
-
-      };
+          const division_form = document.querySelector('.division-form')
+          division_form.addEventListener('change', e => handleDivisionChange(e) )
 
 
 
 
-      const handleDivisionChange = async(e) => {
-        const checked_inputs = document.querySelectorAll('input[name=divisioncheckboxes]:checked')
-        let res = []
-        res = Array.from(checked_inputs).map(c => c.value);
-        markers.remove()
-        markers.clearLayers()
-
-
-          {% for project in projects %}
-            {% for location in project.location.all  %}
-            if (res.includes('{{ project.team_division }}'))  {
-              markers.addLayer(L.marker([{{ location.location.x }}, {{ location.location.y }}]).bindPopup('{{ project.name }}'))
-            }
-            {% endfor %}
-            {% if forloop.last %}
-            markers.addTo(map)
-          {% endif %}
-
-          {% endfor %}
-
-
-
-        {% comment %} {% for project in projects|division_filter:res %}
-          '{{ project }}'
-        {% endfor %} {% endcomment %}
-
-      }
-      const division_form = document.querySelector('.division-form')
-      division_form.addEventListener('change', e => handleDivisionChange(e) )
-
-
-
-
-      loadPage();
+          loadPage();
     </script>
   </body>
 </html>
