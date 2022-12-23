@@ -1,0 +1,19 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GeoDimagi</title>
+  </head>
+  <body>
+    <form action="post">
+      <h2>Add A New Location</h2>
+      {{ form|crispy }}
+      <button class="btn btn-primary">Submit</button>
+    </form>
+    <a href="{% url 'new_project' %}">Add a New Project</a>
+    <a href="{% url 'new_client' %}">Add a New Client</a>
+  </body>
+</html>

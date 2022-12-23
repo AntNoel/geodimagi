@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.gis",
+    "crispy_forms",
     # Local
     "projects.apps.ProjectsConfig",
     "accounts.apps.AccountsConfig",
@@ -72,6 +73,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 WSGI_APPLICATION = "geodimagi.wsgi.application"
 

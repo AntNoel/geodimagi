@@ -17,7 +17,7 @@ class Location(models.Model):
 
 class Client(models.Model):
     name = models.CharField(max_length=50)
-    logo = models.ImageField(upload_to="uploads/images")
+    logo = models.ImageField(upload_to="uploads/images", blank=True)
 
     def __str__(self):
         return self.name
@@ -49,6 +49,3 @@ class Project(models.Model):
 
     def __str__(self):
         return f"{self.client.name}:{self.name}"
-
-    def data_filtered_set(self, divisions):
-        return Project.objects.filter(team_division__in=divisions)
