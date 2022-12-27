@@ -8,12 +8,17 @@
     <title>GeoDimagi</title>
   </head>
   <body>
-    <form action="post">
+    <form method="post">
+      {% csrf_token %}
       <h2>Add A New Location</h2>
       {{ form|crispy }}
+      <label for="latitude">Latitude</label>
+      <input name="latitude" type="text" />
+      <label for="longitude">Longitude</label>
+      <input for="longitude" type="text" />
       <button class="btn btn-primary">Submit</button>
     </form>
-    <a href="{% url 'new_project' %}">Add a New Project</a>
-    <a href="{% url 'new_client' %}">Add a New Client</a>
+    {% comment %} <a href="{% url 'new_project' %}">Add a New Project</a>
+    <a href="{% url 'new_client' %}">Add a New Client</a> {% endcomment %}
   </body>
 </html>

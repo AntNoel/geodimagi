@@ -8,8 +8,11 @@
     <title>GeoDimagi</title>
   </head>
   <body>
-    <form action="post">{{ form|crispy }}</form>
-    <button class="btn btn-primary">Submit</button>
+    <form action="post">
+      <h2>Add A New Client</h2>
+      {{ form|crispy }}
+      <button class="btn btn-primary">Submit</button>
+    </form>
     <a href="{% url 'new_location' %}">Add a New Location</a>
     <a href="{% url 'new_client' %}">Add a New Client</a>
   </body>

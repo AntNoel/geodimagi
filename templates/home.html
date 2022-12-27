@@ -197,10 +197,10 @@
             {% for project in projects %}
              {% for location in project.location.all  %}
                 if ('{{ project.tag }}' == 'office') {
-                  markers.addLayer(L.marker([{{ location.location.x }}, {{ location.location.y }}], {icon: houseIcon}).bindPopup('{{ project.name }}'))
+                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}], {icon: houseIcon}).bindPopup('{{ project.name }}'))
 
                 } else {
-                  markers.addLayer(L.marker([{{ location.location.x }}, {{ location.location.y }}]).bindPopup('{{ project.name }}'))
+                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}]).bindPopup('{{ project.name }}'))
 
                 }
 

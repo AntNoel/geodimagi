@@ -1,5 +1,7 @@
 from django.forms import ModelForm
 from .models import Client, Location
+from django.contrib.gis import forms
+from django.forms import MultiWidget, TextInput
 
 
 class ClientForm(ModelForm):
@@ -9,6 +11,6 @@ class ClientForm(ModelForm):
 
 
 class LocationForm(ModelForm):
-    class meta:
+    class Meta:
         model = Location
         fields = "__all__"

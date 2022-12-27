@@ -42,7 +42,7 @@ class Project(models.Model):
     )
     location = models.ManyToManyField(Location)
     client = models.ManyToManyField(Client, blank=True)
-    tag = models.CharField(max_length=50)
+    tag = models.CharField(max_length=50, blank=True)
 
     def get_absolute_url(self):
         return reverse("project_detail", kwargs={"pk": self.pk})
