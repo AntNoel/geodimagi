@@ -26,32 +26,32 @@ class HomePageView(ListView):
         return context
 
 
-class NewProjectView(CreateView):
-    model = Project
-    fields = ["name", "team_division", "location", "client"]
-    template_name = "newproject.html"
+# class NewProjectView(CreateView):
+#     model = Project
+#     fields = ["name", "team_division", "location", "client"]
+#     template_name = "newproject.html"
 
 
-class NewLocationView(CreateView):
-    model = Location
-    fields = ("name", "address", "city", "country")
-    template_name = "newlocation.html"
-    success_url = reverse_lazy("new_project")
+# class NewLocationView(CreateView):
+#     model = Location
+#     fields = ("name", "address", "city", "country")
+#     template_name = "newlocation.html"
+#     success_url = reverse_lazy("new_project")
 
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        print(form.cleaned_data["longitude"], form.cleaned_data["latitude"])
-        self.object.location = Point(
-            form.cleaned_data["longitude"],
-            form.cleaned_data["latitude"],
-            srid=4326,
-        )
-        self.object.save()
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         self.object = form.save(commit=False)
+#         print(form.cleaned_data["longitude"], form.cleaned_data["latitude"])
+#         self.object.location = Point(
+#             form.cleaned_data["longitude"],
+#             form.cleaned_data["latitude"],
+#             srid=4326,
+#         )
+#         self.object.save()
+#         return super().form_valid(form)
 
 
-class NewClientView(CreateView):
-    model = Client
-    fields = "__all__"
-    template_name = "newclient.html"
-    success_url = reverse_lazy("new_project")
+# class NewClientView(CreateView):
+#     model = Client
+#     fields = "__all__"
+#     template_name = "newclient.html"
+#     success_url = reverse_lazy("new_project")
