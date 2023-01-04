@@ -199,10 +199,10 @@
             {% for project in projects %}
              {% for location in project.location.all  %}
                 if ('{{ project.tag }}' == 'office') {
-                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}], {icon: houseIcon}).bindPopup('{{ project.name }}'))
+                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}], {icon: houseIcon}).bindPopup('{{ location.name }}'))
 
                 } else {
-                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}]).bindPopup('Project Name:{{ project.name }}<br> Client:{{ project.client }}<br>Division:{{ project.team_division }}'))
+                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}]).bindPopup('Project Name:{{ project.name }}<br> Client:{{ project.client }}<br>Division:{{ project.team_division }}<br>Location: {{ location.city}}, {{ location.country }} <br> Active Dates: {{ project.start_date}} - {{ project.end_date}}'))
 
                 }
 
@@ -230,10 +230,10 @@
               {% for project in projects %}
                 {% for location in project.location.all  %}
                 if ('{{ project.tag }}' == 'office') {
-                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}], {icon: houseIcon}).bindPopup('{{ project.name }}'))
+                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}], {icon: houseIcon}).bindPopup('{{ location.name }}'))
 
                 } else if (res.includes('{{ project.team_division }}') && '{{ project.tag }}' !== 'office')  {
-                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}]).bindPopup('{{ project.name }}'))
+                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}]).bindPopup('Project Name:{{ project.name }}<br> Client:{{ project.client }}<br>Division:{{ project.team_division }}<br> Active Dates: {{ project.start_date}} - {{ project.end_date}}'))
                 }
                 {% endfor %}
                 {% if forloop.last %}

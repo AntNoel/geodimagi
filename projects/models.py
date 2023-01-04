@@ -43,6 +43,8 @@ class Project(models.Model):
     location = models.ManyToManyField(Location)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
     tag = models.CharField(max_length=50, blank=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse("project_detail", kwargs={"pk": self.pk})
