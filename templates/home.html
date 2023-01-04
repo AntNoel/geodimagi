@@ -229,8 +229,11 @@
 
               {% for project in projects %}
                 {% for location in project.location.all  %}
-                if (res.includes('{{ project.team_division }}') || '{{ project.tag }}' == 'office')  {
+                if ('{{ project.tag }}' == 'office') {
                   markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}], {icon: houseIcon}).bindPopup('{{ project.name }}'))
+
+                } else if (res.includes('{{ project.team_division }}') && '{{ project.tag }}' !== 'office')  {
+                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}]).bindPopup('{{ project.name }}'))
                 }
                 {% endfor %}
                 {% if forloop.last %}
