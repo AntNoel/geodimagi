@@ -202,7 +202,7 @@
                   markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}], {icon: houseIcon}).bindPopup('{{ project.name }}'))
 
                 } else {
-                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}]).bindPopup('{{ project.name }}'))
+                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}]).bindPopup('Project Name:{{ project.name }}<br> Client:{{ project.client }}<br>Division:{{ project.team_division }}'))
 
                 }
 
@@ -230,7 +230,7 @@
               {% for project in projects %}
                 {% for location in project.location.all  %}
                 if (res.includes('{{ project.team_division }}') || '{{ project.tag }}' == 'office')  {
-                  markers.addLayer(L.marker([{{ location.location.x }}, {{ location.location.y }}]).bindPopup('{{ project.name }}'))
+                  markers.addLayer(L.marker([{{ location.location.y }}, {{ location.location.x }}], {icon: houseIcon}).bindPopup('{{ project.name }}'))
                 }
                 {% endfor %}
                 {% if forloop.last %}

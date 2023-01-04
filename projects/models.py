@@ -41,11 +41,11 @@ class Project(models.Model):
         choices=DIVISIONS_CHOICES, blank=True, max_length=50
     )
     location = models.ManyToManyField(Location)
-    client = models.ManyToManyField(Client, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
     tag = models.CharField(max_length=50, blank=True)
 
     def get_absolute_url(self):
         return reverse("project_detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return f"{self.client.name}:{self.name}"
+        return f"{self.client}:{self.name}"
