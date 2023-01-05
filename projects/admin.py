@@ -12,3 +12,4 @@ admin.site.register(Project)
 @admin.register(Location)
 class LocationAdmin(OSMGeoAdmin):
     list_display = ("name", "location")
+
