@@ -17,9 +17,10 @@ from environs import Env
 
 env = Env()
 env.read_env()
+DEBUG = env.bool("DEBUG", default=False)
 
 
-if os.name == "nt":
+if os.name == "nt" and not DEBUG:
     import platform
 
     OSGEO4W = r"C:\Program Files\QGIS 3.28.1"
@@ -46,7 +47,6 @@ SECRET_KEY = env.str(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
