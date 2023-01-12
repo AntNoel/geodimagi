@@ -142,3 +142,12 @@ table {
   right: 0;
   z-index: 800;
 }
+
+.location_form {
+  /* display: flex;
+  flex-direction: column; */
+}
+
+#id_location_div_map {
+  display: contents;
+}

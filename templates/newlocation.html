@@ -1,24 +1,22 @@
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags %} {% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {{ form.media }}
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GeoDimagi</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
   </head>
   <body>
-    <form method="post">
+    <form class="location_form text-center" method="post">
       {% csrf_token %}
       <h2>Add A New Location</h2>
       {{ form|crispy }}
-      <label for="latitude">Latitude</label>
-      <input name="latitude" type="text" />
-      <label for="longitude">Longitude</label>
-      <input for="longitude" type="text" />
-      <button class="btn btn-primary">Submit</button>
+      <button type="submit">Submit</button>
     </form>
-    {% comment %} <a href="{% url 'new_project' %}">Add a New Project</a>
-    <a href="{% url 'new_client' %}">Add a New Client</a> {% endcomment %}
+    <a href="{% url 'new_project' %}">Add a New Project</a>
+    <a href="{% url 'new_client' %}">Add a New Client</a>
   </body>
 </html>
