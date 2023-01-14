@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from django.contrib.gis.db.backends import postgis
 from pathlib import Path
 import os
 import dj_database_url
@@ -119,15 +119,29 @@ WSGI_APPLICATION = "geodimagi.wsgi.application"
 #     }
 # }
 
+
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgis://geodimagiadmin:geodimagi@localhost:5432", conn_max_age=600
+        default="postgis://geodimagiadmin:geodimagi@localhost/geodimagi",
+        conn_max_age=600,
     )
 }
-# DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
 
-# GDAL_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\gdal306"
-# GEOS_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\geos_c"
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.contrib.gis.db.backends.postgis",
+#         "NAME": "geodimagi",
+#         "USER": "geodimagiadmin",
+#         "PASSWORD": "geodimagi",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
+DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
+
+GDAL_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\gdal306"
+GEOS_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\geos_c"
 
 
 # Password validation
