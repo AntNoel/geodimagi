@@ -138,10 +138,10 @@ DATABASES = {
 #         "PORT": "5432",
 #     }
 # }
-DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
+# DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
 
-GDAL_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\gdal306"
-GEOS_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\geos_c"
+# GDAL_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\gdal306"
+# GEOS_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\geos_c"
 
 
 # Password validation
