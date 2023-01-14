@@ -12,14 +12,17 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 from environs import Env
 
 
 env = Env()
 env.read_env()
 
+DEBUG = env.bool("DEBUG", default=False)
 
-if os.name == "nt":
+
+if os.name == "nt" and DEBUG != False:
     import platform
 
     OSGEO4W = r"C:\Program Files\QGIS 3.28.1"
@@ -45,7 +48,6 @@ SECRET_KEY = env.str(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -117,11 +119,15 @@ DATABASES = {
     }
 }
 
-
+DATABASES = {
+    "default": dj_database_url.config(
+        default="postgis://geodimagiadmin:geodimagi@localhost:5432", conn_max_age=600
+    )
+}
 # DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
 
-GDAL_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\gdal306"
-GEOS_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\geos_c"
+# GDAL_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\gdal306"
+# GEOS_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\geos_c"
 
 
 # Password validation
