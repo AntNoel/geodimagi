@@ -1,7 +1,7 @@
 #Exit on error
 set -o errexit
 
-install binutils libproj-dev gdal-bin
+install binutils libproj-dev python-gdal
 
 # pip install gdal-bin libgdal-dev
 # pip aptitude install python3-gdalinstall python3-gdal
