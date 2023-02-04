@@ -12,4 +12,4 @@ pip install -r requirements.txt
 python manage.py collectstatic --no-input
 python manage.py migrate
 
-python manage.py createsuperuser --username=antjnoel --email=antjnoel@gmail.com
+manage.py createsuperuser --username=antjnoel --email=antjnoel@gmail.com
