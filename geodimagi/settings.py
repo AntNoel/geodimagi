@@ -49,11 +49,12 @@ SECRET_KEY = env.str(
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["https://*.fly.dev"]
 
-RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+# RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+# if RENDER_EXTERNAL_HOSTNAME:
+#     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 INSTALLED_APPS = [
@@ -104,6 +105,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 WSGI_APPLICATION = "geodimagi.wsgi.application"
 
+DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -120,13 +123,13 @@ WSGI_APPLICATION = "geodimagi.wsgi.application"
 # }
 
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default="postgis://geodimagiadmin:geodimagi@localhost/geodimagi",
-        conn_max_age=600,
-    )
-}
-DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
+# DATABASES = {
+#     "default": dj_database_url.config(
+#         default="postgis://geodimagiadmin:geodimagi@localhost/geodimagi",
+#         conn_max_age=600,
+#     )
+# }
+# DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
 
 # DATABASES = {
 #     "default": {
@@ -139,6 +142,7 @@ DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
 #     }
 # }
 # DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
+
 
 # GDAL_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\gdal306"
 # GEOS_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\geos_c"
