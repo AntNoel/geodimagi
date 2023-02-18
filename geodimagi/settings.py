@@ -122,7 +122,6 @@ DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
 #     }
 # }
 
-
 # DATABASES = {
 #     "default": dj_database_url.config(
 #         default="postgis://geodimagiadmin:geodimagi@localhost/geodimagi",
@@ -148,6 +147,7 @@ DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
 # GEOS_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\geos_c"
 
 GDAL_LIBRARY_PATH = os.environ.get("GDAL_LIBRARY_PATH")
+
 GEOS_LIBRARY_PATH = os.environ.get("GEOS_LIBRARY_PATH")
 
 
