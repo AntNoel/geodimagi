@@ -140,6 +140,7 @@ DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
 #         "PORT": "5432",
 #     }
 # }
+
 DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
 
 
