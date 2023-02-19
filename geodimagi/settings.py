@@ -141,15 +141,19 @@ DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
 #     }
 # }
 
-DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
+# DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
 
 
 # GDAL_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\gdal306"
 # GEOS_LIBRARY_PATH = r"C:\Program Files\QGIS 3.28.1\bin\geos_c"
 
-GDAL_LIBRARY_PATH = os.environ.get("GDAL_LIBRARY_PATH")
-GEOS_LIBRARY_PATH = os.environ.get("GEOS_LIBRARY_PATH")
+# GDAL_LIBRARY_PATH = os.environ.get("GDAL_LIBRARY_PATH")
+# GEOS_LIBRARY_PATH = os.environ.get("GEOS_LIBRARY_PATH")
 
+
+DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES["default"].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
