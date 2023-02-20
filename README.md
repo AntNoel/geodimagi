@@ -52,7 +52,7 @@ python manage.py runserver
 - GeoDjango:
   - Geodjango used in conjunction with drivers such as GEOS and GDAL are used to work with spatial data
 - Leaflet
-  = Used to display the world map and place markers
+  - Used to display the world map and place markers
 - Postgis
   - An extension of postgres, postgis is used to store spatial data in a SQL database
 
